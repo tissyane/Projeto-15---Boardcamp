@@ -10,4 +10,17 @@ async function listCategories(req, res) {
   }
 }
 
-export { listCategories };
+async function createCategory(req, res) {
+  const categoryName = res.locals.categoryName;
+
+  try {
+    await connection.query("INSERT INTO categories (name) VALUES ($1);", [
+      categoryName,
+    ]);
+    res.sendStatus(StatusCodes.CREATED);
+  } catch (err) {
+    res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
+  }
+}
+
+export { listCategories, createCategory };

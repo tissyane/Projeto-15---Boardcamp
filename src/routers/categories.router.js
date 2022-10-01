@@ -1,12 +1,13 @@
 import express from "express";
 import {
   listCategories,
-  //   createCategories,
+  createCategory,
 } from "../controllers/categories.controller.js";
+import { createCategoryValidation } from "../middlewares/categories.middleware.js";
 
 const router = express.Router();
 
 router.get("/categories", listCategories);
-// router.post("/categories", createCategories);
+router.post("/categories", createCategoryValidation, createCategory);
 
 export default router;
