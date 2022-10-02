@@ -5,10 +5,10 @@ import { categorySchema } from "../schemas/category.schema.js";
 async function createCategoryValidation(req, res, next) {
   const { name } = req.body;
 
-  const validation = categorySchema.validate(req.body);
+  const validation = categorySchema.validate({ name }, { abortEarly: false });
 
   if (validation.error) {
-    const error = validation.error.details[0].message;
+    const error = validation.error.details.map((detail) => detail.message);
     return res.status(StatusCodes.BAD_REQUEST).send(error);
   }
 

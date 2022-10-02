@@ -3,14 +3,16 @@ import { StatusCodes } from "http-status-codes";
 
 async function listGames(req, res) {
   const name = req.query.name;
+
   try {
     if (name) {
       const filteredGames = await connection.query(
-        `SELECT games.*, categories.name AS "categoryName" FROM games JOIN categories ON games."categoryId" = categories.id WHERE LOWER (games.name) LIKE $1;`,
-        [`${name.toLowerCase()}%`]
+        `SELECT games.*, categories.name as "categoryName" FROM games JOIN categories ON games."categoryId" = categories.id WHERE games.name ILIKE ($1 || '%');`,
+        [name]
       );
       return res.status(StatusCodes.OK).send(filteredGames.rows);
     }
+
     const games = await connection.query(
       'SELECT games.*, categories.name as "categoryName" FROM games JOIN categories ON games."categoryId" = categories.id;'
     );
@@ -20,4 +22,21 @@ async function listGames(req, res) {
   }
 }
 
-export { listGames };
+async function createGame(req, res) {
+  const { name, image, stockTotal, categoryId, pricePerDay } =
+    res.locals.gameData;
+  const formatedName = name.toLowerCase();
+
+  try {
+    await connection.query(
+      'INSERT INTO games (name,image,"stockTotal","categoryId","pricePerDay") VALUES ($1,$2,$3,$4,$5);',
+      [formatedName, image, stockTotal, categoryId, pricePerDay]
+    );
+
+    res.sendStatus(StatusCodes.CREATED);
+  } catch (err) {
+    res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
+  }
+}
+
+export { listGames, createGame };
