@@ -1,7 +1,7 @@
 import joi from "joi";
 
 const gameSchema = joi.object({
-  name: joi.string().empty().trim().required(),
+  name: joi.string().empty().required(),
   image: joi.string().uri().optional(),
   stockTotal: joi.number().empty().integer().min(1).required(),
   categoryId: joi.number().empty().integer().required(),
