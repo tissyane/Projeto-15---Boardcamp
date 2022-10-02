@@ -1,6 +1,6 @@
 import connection from "../database/database.js";
-import { categorySchema } from "../schemas/category.schema.js";
 import { StatusCodes } from "http-status-codes";
+import { categorySchema } from "../schemas/category.schema.js";
 
 async function createCategoryValidation(req, res, next) {
   const { name } = req.body;

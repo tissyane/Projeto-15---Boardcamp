@@ -3,11 +3,13 @@ import cors from "cors";
 import dotenv from "dotenv";
 dotenv.config();
 import categoriesRouter from "./routers/categories.router.js";
+import gamesRouter from "./routers/games.router.js";
 
 const server = express();
 server.use(cors());
 server.use(express.json());
 server.use(categoriesRouter);
+server.use(gamesRouter);
 
 const PORT = process.env.PORT;
 
