@@ -57,8 +57,8 @@ async function listRentals(req, res) {
 
     rentals.rows.forEach((rental) => {
       rental.rentDate = rental.rentDate.toISOString().split("T")[0];
-      rental.returnDate = rental.returnDate.toISOString().split("T")[0];
     });
+
     res.status(StatusCodes.OK).send(rentals.rows);
   } catch (err) {
     res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
