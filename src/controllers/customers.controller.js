@@ -22,11 +22,7 @@ async function listCustomers(req, res) {
 
 async function findCustomerID(req, res) {
   const customer = res.locals.customer;
-  try {
-    res.status(StatusCodes.OK).send(customer.rows);
-  } catch (err) {
-    res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
-  }
+  res.status(StatusCodes.OK).send(customer.rows);
 }
 
 async function createCustomer(req, res) {
@@ -44,13 +40,13 @@ async function createCustomer(req, res) {
 }
 
 async function updateCustomer(req, res) {
-  const { name, phone, cpf, birthday } = req.body;
   const { id } = req.params;
-
+  const { name, phone, cpf, birthday } = req.body;
   try {
     await connection.query(
-      `UPDATE customers SET name = '${name}', phone ='${phone}', birthday='${birthday}',cpf= '${cpf}' WHERE id = $1;`,
-      [id]
+      `UPDATE customers SET
+    name = $1, phone = $2, cpf = $3, birthday = $4 WHERE id = $5`,
+      [name, phone, cpf, birthday, id]
     );
     res.sendStatus(StatusCodes.OK);
   } catch (err) {

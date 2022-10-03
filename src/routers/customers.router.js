@@ -5,9 +5,12 @@ import {
   listCustomers,
   updateCustomer,
 } from "../controllers/customers.controller.js";
-import { customerCpfValidation } from "../middlewares/customers.middlewares/customerCPF.middleware.js";
-import { customerDataValidation } from "../middlewares/customers.middlewares/customerData.middleware.js";
-import { customerIdValidation } from "../middlewares/customers.middlewares/customerId.middleware.js";
+import {
+  customerCPFValidation,
+  customerDataValidation,
+  customerIdValidation,
+  customerRegisteredValidation,
+} from "../middlewares/customers.middlewares.js";
 
 const router = express.Router();
 
@@ -16,14 +19,14 @@ router.get("/customers/:id", customerIdValidation, findCustomerID);
 router.post(
   "/customers",
   customerDataValidation,
-  customerCpfValidation,
+  customerRegisteredValidation,
   createCustomer
 );
 router.put(
   "/customers/:id",
   customerDataValidation,
   customerIdValidation,
-  customerCpfValidation,
+  customerCPFValidation,
   updateCustomer
 );
 
