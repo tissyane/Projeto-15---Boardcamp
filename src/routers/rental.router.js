@@ -2,7 +2,8 @@ import express from "express";
 import {
   createRental,
   deleteRental,
-  getRentals,
+  listRentals,
+  returnRental,
 } from "../controllers/rental.controller.js";
 import {
   rentalDataValidation,
@@ -25,8 +26,9 @@ router.get(
   "/rentals",
   customerIdRentalValidation,
   gameIdRentalValidation,
-  getRentals
+  listRentals
 );
 router.delete("/rentals/:id", deleteRental);
+router.post("/rentals/:id/return", returnRental);
 
 export default router;

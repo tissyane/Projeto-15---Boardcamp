@@ -7,7 +7,7 @@ import { createCategoryValidation } from "../middlewares/categories.middleware.j
 
 const router = express.Router();
 
-router.get("/categories", listCategories);
 router.post("/categories", createCategoryValidation, createCategory);
+router.get("/categories", listCategories);
 
 export default router;

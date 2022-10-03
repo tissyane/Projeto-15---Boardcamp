@@ -13,15 +13,14 @@ import {
 } from "../middlewares/customers.middlewares.js";
 
 const router = express.Router();
-
-router.get("/customers", listCustomers);
-router.get("/customers/:id", customerIdValidation, findCustomerID);
 router.post(
   "/customers",
   customerDataValidation,
   customerRegisteredValidation,
   createCustomer
 );
+router.get("/customers", listCustomers);
+router.get("/customers/:id", customerIdValidation, findCustomerID);
 router.put(
   "/customers/:id",
   customerDataValidation,

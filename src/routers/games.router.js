@@ -4,7 +4,7 @@ import { createGameValidation } from "../middlewares/games.middleware.js";
 
 const router = express.Router();
 
-router.get("/games", listGames);
 router.post("/games", createGameValidation, createGame);
+router.get("/games", listGames);
 
 export default router;
